@@ -12,52 +12,58 @@ import java.sql.Statement;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
     private static volatile UserDao INSTANCE = null;
-    private static final String selectUserByLogin = "SELECT * FROM users WHERE login=?";
-    private static final String selectUserById = "SELECT * FROM users WHERE id=?";
-    private static final String addUser = "INSERT INTO users (login, password, name, lastname, country, address," +
-            "city, zip, telephone) VALUES (?,?,?,?,?,?,?,?,?)";
-    private static final String updateUser = "UPDATE users SET name=?, lastname=?, country=?, address=?," +
-            "city=?, zip=?, telephone=? WHERE id=?)";
-    private static final String deleteUser = "DELETE FROM users WHERE id=?";
+    private static final String selectUserByLogin = "SELECT Users.id,Users.login,Users.password,Users.name," +
+            "Users.lastname,Users.role FROM Users WHERE Users.login = ?";
+    private static final String selectUserById = "SELECT Users.id,Users.login,Users.password,Users.name,Users.lastname," +
+            "Users.role,Contacts.email,Contacts.telephone,Contacts.country,Contacts.city,Contacts.address," +
+            "Contacts.zip FROM Users,Contacts WHERE Users.contact_id = Contacts.id HAVING Users.id = ?";
+    private static final String addContact = "INSERT INTO Contacts (email, telephone, country, city, address, zip) VALUES (?,?,?,?,?,?)";
+    private static final String addUser = "INSERT INTO Users (login, password, name, lastname,role,contact_id) VALUES (?,?,?,?,?,?)";
+    private static final String getContactID = "SELECT contact_id FROM Users WHERE id=?";
+    private static final String updateUser = "UPDATE Contacts SET email=?, telephone=?, country=?, city=?, address=?, zip=? WHERE id=?";
+    private static final String deleteUser = "DELETE FROM Users WHERE id=?";
 
     public User getUserByLogin(String login) throws SQLException {
         PreparedStatement ps = prepareStatement(selectUserByLogin);
         ps.setString(1,login);
         ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return setUserFromResultSet(rs);
-        }
-        close(rs);
-        return null;
-    }
-    private User setUserFromResultSet(ResultSet rs) throws SQLException{
         User user = new User();
-        user.setId(rs.getInt(1));
-        user.setLogin(rs.getString(2));
-        user.setPassword(rs.getString(3));
-        user.setName(rs.getString(4));
-        user.setLastname(rs.getString(5));
-        user.setCountry(rs.getString(6));
-        user.setAddress(rs.getString(7));
-        user.setCity(rs.getString(8));
-        user.setZip(rs.getString(9));
-        user.setTelephone(rs.getString(10));
+        while (rs.next()) {
+            user.setId(rs.getInt(1));
+            user.setLogin(rs.getString(2));
+            user.setPassword(rs.getString(3));
+            user.setName(rs.getString(4));
+            user.setLastName(rs.getString(5));
+            user.setRole(rs.getString(6));
+        }
         return user;
     }
+
     @Override
     public User save(User user) throws SQLException {
-        PreparedStatement psSave = prepareStatement(addUser,Statement.RETURN_GENERATED_KEYS);
-        psSave.setString(1,user.getLogin());
-        psSave.setString(2,user.getPassword());
-        psSave.setString(3,user.getName());
-        psSave.setString(4,user.getLastname());
-        psSave.setString(5,user.getCountry());
-        psSave.setString(6,user.getAddress());
-        psSave.setString(7,user.getCity());
-        psSave.setString(8,user.getZip());
-        psSave.setString(9,user.getTelephone());
-        psSave.executeUpdate();
-        ResultSet rs = psSave.getGeneratedKeys();
+        PreparedStatement psSave1 = prepareStatement(addContact,Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement psSave2 = prepareStatement(addUser,Statement.RETURN_GENERATED_KEYS);
+        psSave1.setString(1,user.getEmail());
+        psSave1.setString(2,user.getTelephone());
+        psSave1.setString(3,user.getCountry());
+        psSave1.setString(4,user.getCity());
+        psSave1.setString(5,user.getAddress());
+        psSave1.setString(6,user.getZip());
+        psSave1.executeUpdate();
+        ResultSet rs = psSave1.getGeneratedKeys();
+        Integer contactId = 0;
+        if (rs.next()) {
+            contactId = (rs.getInt(1));
+        }
+        close(rs);
+        psSave2.setString(1,user.getLogin());
+        psSave2.setString(2,user.getPassword());
+        psSave2.setString(3,user.getName());
+        psSave2.setString(4,user.getLastName());
+        psSave2.setString(5,user.getRole());
+        psSave2.setInt(6,contactId);
+        psSave2.executeUpdate();
+        rs = psSave2.getGeneratedKeys();
         if (rs.next()) {
             user.setId(rs.getInt(1));
         }
@@ -70,25 +76,43 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         PreparedStatement psGet = prepareStatement(selectUserById);
         psGet.setInt(1, (int)id);
         ResultSet rs = psGet.executeQuery();
-        if (rs.next()) {
-            return setUserFromResultSet(rs);
+        User user = new User();
+        while (rs.next()) {
+            user.setId(rs.getInt(1));
+            user.setLogin(rs.getString(2));
+            user.setPassword(rs.getString(3));
+            user.setName(rs.getString(4));
+            user.setLastName(rs.getString(5));
+            user.setRole(rs.getString(6));
+            user.setEmail(rs.getString(7));
+            user.setTelephone(rs.getString(8));
+            user.setCountry(rs.getString(9));
+            user.setCity(rs.getString(10));
+            user.setAddress(rs.getString(11));
+            user.setZip(rs.getString(12));
         }
-        close(rs);
-        return null;
+        return user;
     }
 
     @Override
     public void update(User user) throws SQLException {
-        PreparedStatement psUpdate = prepareStatement(updateUser);
-        psUpdate.setInt(8,user.getId());
-        psUpdate.setString(1,user.getName());
-        psUpdate.setString(2,user.getLastname());
-        psUpdate.setString(3,user.getCountry());
-        psUpdate.setString(4,user.getAddress());
-        psUpdate.setString(5,user.getCity());
-        psUpdate.setString(6,user.getZip());
-        psUpdate.setString(7,user.getTelephone());
-        psUpdate.executeUpdate();
+        PreparedStatement psUpdate1 = prepareStatement(getContactID);
+        PreparedStatement psUpdate2 = prepareStatement(updateUser);
+        psUpdate1.setInt(1,user.getId());
+        ResultSet rs = psUpdate1.executeQuery();
+        Integer contactId = 0;
+        if (rs.next()) {
+            contactId = (rs.getInt(1));
+        }
+        close(rs);
+        psUpdate2.setInt(7,contactId);
+        psUpdate2.setString(1,user.getEmail());
+        psUpdate2.setString(2,user.getTelephone());
+        psUpdate2.setString(3,user.getCountry());
+        psUpdate2.setString(4,user.getCity());
+        psUpdate2.setString(5,user.getAddress());
+        psUpdate2.setString(6,user.getZip());
+        psUpdate2.executeUpdate();
     }
 
     @Override

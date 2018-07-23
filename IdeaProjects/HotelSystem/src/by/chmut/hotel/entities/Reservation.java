@@ -11,9 +11,9 @@ import java.time.LocalDate;
 public class Reservation {
     private int id;
     private int userId;
-    private LocalDate date;
     private int roomId;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    private LocalDate date;
+//    private LocalDate checkIn;
+//    private LocalDate checkOut;
 
 }

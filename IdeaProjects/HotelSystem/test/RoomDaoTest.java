@@ -25,40 +25,38 @@ public class RoomDaoTest {
         int afterSave = roomDao.getAllRoom().size();
         Assert.assertNotSame(beforeSave, afterSave);
 
-//        connection.rollback();
-
 
         newRoom.setType("as");
         roomDao.update(newRoom);
 
-        Room updatedRoom = roomDao.get(newRoom.getRoomNumber());
+        Room updatedRoom = roomDao.get(newRoom.getId());
         Assert.assertEquals("Метод update не корректен","as", updatedRoom.getType());
         newRoom.setBedType(2);
         roomDao.update(newRoom);
 
-        updatedRoom = roomDao.get(newRoom.getRoomNumber());
+        updatedRoom = roomDao.get(newRoom.getId());
         Assert.assertEquals("Метод update не корректен",2, updatedRoom.getBedType());
         newRoom.setPrice(129.9);
         roomDao.update(newRoom);
 
-        updatedRoom = roomDao.get(newRoom.getRoomNumber());
-        Assert.assertEquals(129.9,129.9, 0);
+        updatedRoom = roomDao.get(newRoom.getId());
+        Assert.assertEquals(129.9,updatedRoom.getPrice(), 0);
         newRoom.setCheckIn(LocalDate.parse("2018-12-10"));
         roomDao.update(newRoom);
 
-        updatedRoom = roomDao.get(newRoom.getRoomNumber());
+        updatedRoom = roomDao.get(newRoom.getId());
         Assert.assertEquals("Метод update не корректен",LocalDate.parse("2018-12-10"), updatedRoom.getCheckIn());
 
         newRoom.setCheckOut(LocalDate.parse("2018-12-12"));
         roomDao.update(newRoom);
 
-        updatedRoom = roomDao.get(newRoom.getRoomNumber());
+        updatedRoom = roomDao.get(newRoom.getId());
         Assert.assertEquals("Метод update не корректен",LocalDate.parse("2018-12-12"), updatedRoom.getCheckOut());
 
         List<Room> rooms = roomDao.getRoomOnDateAndBedType(2, LocalDate.parse("2018-12-14"), LocalDate.parse("2018-12-16"));
         Assert.assertNotNull(rooms);
 
-        roomDao.delete(newRoom.getRoomNumber());
+        roomDao.delete(newRoom.getId());
 
         afterSave = roomDao.getAllRoom().size();
         Assert.assertEquals(beforeSave, afterSave);

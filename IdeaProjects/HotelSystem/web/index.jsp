@@ -1,10 +1,11 @@
-<%-- Created by IntelliJ IDEA. --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
-  <head>
-    <title></title>
-  </head>
-  <body>
-
-  </body>
+<head>
+    <title>Hotel Lux</title>
+</head>
+<jsp:forward page="/frontController"/>
+<body>
+</form>
+</body>
 </html>

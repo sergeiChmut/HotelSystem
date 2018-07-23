@@ -16,7 +16,7 @@ public interface RoomService {
 
     int delete(Serializable id);
 
-    Room getRoomOnDateAndBedType(int bedType, LocalDate checkIn, LocalDate checkOut);
+    List<Room> getRoomOnDateAndBedType(int bedType, LocalDate checkIn, LocalDate checkOut);
 
     List<Room> getAllRoom();
 }
