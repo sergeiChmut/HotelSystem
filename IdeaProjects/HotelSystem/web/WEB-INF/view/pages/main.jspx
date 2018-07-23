@@ -57,18 +57,18 @@
             </div>
             <div class="welinfo" style="margin-top: -80px;">
                 <h2 class="media-heading"
-                    style="font-family: 'Times New Roman'">WONDERFUL HOTEL IN HEART OF ATHENS, GREECE.</h2>
+                    style="font-family: 'Times New Roman'"><fmt:message key="main.about" bundle="${i18n}"/>.</h2>
             </div>
         </div>
         <div class="row">
             <p style="text-align: center;">
-                <span style="color: #6a6a6a; font-size: 20px; line-height: 28px;">Hotel Paradise is an oasis in the heart of the historic and business center of AnyCity. Here the Greek art of hospitality complements the legendary passion for service of the Spanish chain, creating a unique living experience. Located in the heart of AnyCity, only 200 m away from the central metro station. Enjoy a comfortable stay in our Luxury Room.<br/>
+                <span style="color: #6a6a6a; font-size: 20px; line-height: 28px;"><fmt:message key="main.about2" bundle="${i18n}"/><br/>
                 </span>
             </p>
         </div>
         <div class="row">
             <h4 class="cmsmasters_heading"><a href="#"
-                                              style="font-family: 'Times New Roman';color: #c09c76">View Our Services</a>
+                                              style="font-family: 'Times New Roman';color: #c09c76"><fmt:message key="main.view" bundle="${i18n}"/></a>
             </h4>
         </div>
     </div>
@@ -200,7 +200,7 @@
                                     Всего : ${room.price}
                                 </h4>
                                 <div class="row" style="height: 40px">
-                                    <a href="#" style="color: #c09c76">Подробнее</a>
+                                    <a href="${pageContext.request.contextPath}/frontController?pageName=search" style="color: #c09c76"><fmt:message key="main.more" bundle="${i18n}"/></a>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
             <div class="row col-xs-4 col-xs-offset-4">
                 <a style="color: #2b669a;font-size: large "
                    href="${pageContext.request.contextPath}/frontController?pageName=search"
-                   class="btn-link">Search and show more</a>
+                   class="btn-link"><fmt:message key="main.show" bundle="${i18n}"/></a>
             </div>
         </div>
     </div>
@@ -242,7 +242,7 @@
             height:auto;"/>
                 <div class="caption" style="position: absolute;top: 45%;left: 0;width: 100%;">
                     <a href="#"
-                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white">SPA SALON</a>
+                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white"><fmt:message key="main.spa" bundle="${i18n}"/></a>
                 </div>
             </div>
             <div class="thumbnail text-center col-xs-3" style="position: relative">
@@ -250,7 +250,7 @@
             height:auto;"/>
                 <div class="caption" style="position: absolute;top: 45%;left: 0;width: 100%;">
                     <a href="#"
-                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white">POOL</a>
+                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white"><fmt:message key="main.pool" bundle="${i18n}"/></a>
                 </div>
             </div>
             <div class="thumbnail text-center col-xs-3" style="position: relative">
@@ -258,7 +258,7 @@
             height:auto;"/>
                 <div class="caption" style="position: absolute;top: 45%;left: 0;width: 100%;">
                     <a href="#"
-                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white">RESTAURANT</a>
+                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white"><fmt:message key="main.rest" bundle="${i18n}"/></a>
                 </div>
             </div>
             <div class="thumbnail text-center col-xs-3" style="position: relative">
@@ -266,7 +266,7 @@
             height:auto;"/>
                 <div class="caption" style="position: absolute;top: 45%;left: 0;width: 100%;">
                     <a href="#"
-                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white">ACTIVITIES</a>
+                       style="font-size: 30px;font-family:'Times New Roman';text-decoration:none;color: white"><fmt:message key="main.activ" bundle="${i18n}"/></a>
                 </div>
             </div>
         </div>
@@ -282,7 +282,7 @@
             </div>
             <div class="welinfo" style="margin-top: -80px;">
                 <h2 class="media-heading"
-                    style="font-family: 'Times New Roman'">TESTIMONIALS</h2>
+                    style="font-family: 'Times New Roman'"><fmt:message key="main.tem" bundle="${i18n}"/></h2>
             </div>
         </div>
     </div>
@@ -310,7 +310,7 @@
                         </div>
                         <div class="col-xs-4 col-xs-offset-4">
                             <h3>
-                                <em>"I was welcomed by a unique and attentive staff that has few peers in a city filed with great hotels with exemplary service. Beautiful and very special."</em>
+                                <em>"<fmt:message key="main.tem1" bundle="${i18n}"/>"</em>
                             </h3>
                             <h3 style="text-transform: uppercase">Mia Turner</h3>
                             <h3 style="color: #c09c76;">MODEL</h3>
@@ -329,7 +329,7 @@
                         </div>
                         <div class="col-xs-4 col-xs-offset-4">
                             <h3>
-                                <em>"Chilling out on the bed in your hotel room watching television, while wearing your own pajamas, is sometimes the best part of a vacation."</em>
+                                <em><fmt:message key="main.tem2" bundle="${i18n}"/></em>
                             </h3>
                             <h3 style="text-transform: uppercase">Laura Marano</h3>
                             <h3 style="color: #c09c76;">DESIGNER</h3>
@@ -347,7 +347,7 @@
                         </div>
                         <div class="col-xs-4 col-xs-offset-4">
                             <h3>
-                                <em>"The Hotel is simply amazing. The subtle luxury of refined simplicity, uncluttered and unpretentious. Very private and the staff is an attentive and discreet."</em>
+                                <em><fmt:message key="main.tem3" bundle="${i18n}"/></em>
                             </h3>
                             <h3 style="text-transform: uppercase">Mike Jameson</h3>
                             <h3 style="color: #c09c76;">DEVELOPER</h3>

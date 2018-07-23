@@ -51,7 +51,7 @@ public class ReservationController implements Controller {
         if (session.getAttribute("roomTemp") != null) {
             roomTemp = (List<Room>) session.getAttribute("roomTemp");
         }
-        if ((session.getAttribute("roomId") != null) && (req.getParameter("delete") == null)) {
+        if ((req.getParameter("delete") == null)&&(session.getAttribute("roomId") != null)) {
             int roomId = (Integer) session.getAttribute("roomId");
             session.removeAttribute("roomId");
             Room room = roomService.get(roomId);
@@ -59,30 +59,39 @@ public class ReservationController implements Controller {
             room.setCheckOut((LocalDate) req.getSession().getAttribute("checkOut"));
             roomTemp.add(room);
             totalSum = (Double) session.getAttribute("totalSum") + room.getPrice();
+            totalSum = roundResult(totalSum);
             session.setAttribute("totalSum", totalSum);
             session.setAttribute("roomTemp", roomTemp);
         }
         // Remove room
-        if (req.getParameter("delete") != null) {
+        if ((req.getParameter("delete") != null)&&(session.getAttribute("roomId")!=null)) {
             int delIndex = -1;
             for (int i = 0; i < roomTemp.size(); i++) {
                 Room room = roomTemp.get(i);
                 if (room.getId() == (int) (session.getAttribute("roomId"))) {
                     delIndex = i;
                     totalSum = (Double) session.getAttribute("totalSum") - room.getPrice();
-                    session.setAttribute("totalSum", totalSum);
-                    session.removeAttribute("roomId");
+                    totalSum = roundResult(totalSum);
                 }
             }
             if (delIndex != -1) {
                 roomTemp.remove(delIndex);
                 session.setAttribute("roomTemp", roomTemp);
+                session.removeAttribute("roomId");
+                session.setAttribute("totalSum", totalSum);
             }
         }
         if (roomTemp.isEmpty()) {
             req.setAttribute("emptyMsg", "reserv.emptyList");
         }
         req.getRequestDispatcher(MAIN_PAGE).forward(req, resp);
+    }
+
+
+    private double roundResult (double d) {
+        d = d*100;
+        int i = (int) Math.round(d);
+        return (double) i/100;
     }
 
 }

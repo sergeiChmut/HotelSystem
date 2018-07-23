@@ -21,13 +21,6 @@ public class FrontController extends HttpServlet {
             pageName = "home";
         }
         HttpSession session = req.getSession();
-        //        String name2= req.getRequestURI();
-//        if (pageName == null || pageName.isEmpty()) {
-//            command = CommandType.selectCommand(name2);
-//            pageName = "home";
-//        } else {
-//        }
-//        req.getSession().setAttribute("name2",name2);
         CommandType command = CommandType.selectCommand(pageName);
         session.setAttribute("pagePath",command.getPagePath());
         req.setAttribute("title",command.getPageName());

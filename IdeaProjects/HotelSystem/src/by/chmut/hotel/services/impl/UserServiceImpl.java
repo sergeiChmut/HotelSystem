@@ -29,13 +29,15 @@ public class UserServiceImpl extends AbstractService implements UserService {
         try {
             startTransaction();
             User user = userDao.getUserByLogin(login);
-            if (user == null) {
+            commit();
+            if (user.getId() == 0) {
+                startTransaction();
                 user = new User(login, password, name, lastName, "user", email, phone, country, city, address, zip);
                 user = userDao.save(user);
+                commit();
             } else {
                 user = null;
             }
-            commit();
             return user;
         } catch (SQLException e) {
             e.printStackTrace();

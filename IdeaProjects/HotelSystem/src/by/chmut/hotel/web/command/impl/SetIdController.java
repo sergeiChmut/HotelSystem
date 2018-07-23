@@ -12,7 +12,5 @@ public class SetIdController implements Controller {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         int roomId = Integer.parseInt(req.getParameter("roomId"));
         req.getSession().setAttribute("roomId",roomId);
-//        String contextPath = req.getContextPath();
-//        resp.sendRedirect(contextPath+ "/frontController?pageName=reservation");
     }
 }

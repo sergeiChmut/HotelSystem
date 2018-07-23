@@ -40,13 +40,21 @@
                                     </li>
                                 </c:otherwise>
                             </c:choose>
-                            <fmt:setLocale value="${sessionScope.locale}"/>
-                            <fmt:setBundle basename="messages" var="i18n"/>
-                            <c:url var="path" value="/frontController?pageName=${title}"></c:url>
-                            <li>
-                                <a href="${pageContext.request.contextPath}/frontController?pageName=reservation">RESERVATION</a>
-                            </li>
+                            <c:set var="navName"><fmt:message key="title.reservation" bundle="${i18n}"/></c:set>
+                            <c:choose>
+                                <c:when test="${title eq 'Reservation'}">
+                                    <li class="active"><a href="#">${navName}</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li>
+                                        <a href="${pageContext.request.contextPath}/frontController?pageName=reservation">${navName}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
+                        <fmt:setLocale value="${sessionScope.locale}"/>
+                        <fmt:setBundle basename="messages" var="i18n"/>
+                        <c:url var="path" value="/frontController?pageName=${title}"></c:url>
                         <a id="navbrand" class="navbar-brand col-xs-3" href="#">Hotel Paradise</a>
                         <ul id="rightbar" class="nav navbar-nav navbar-right">
                             <c:choose>

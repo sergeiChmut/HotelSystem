@@ -5,26 +5,23 @@ import by.chmut.hotel.web.command.impl.*;
 
 
 public enum CommandType {
-    HOME("Home", "pages/main.jspx", "/hotel/main", new DefaultController()),
-    LOGIN("Login", "", "/hotel/login", new LoginController()),
-    LOGOUT("Logout", "", "/hotel/login", new LogoutController()),
-    SEARCH("Search", "pages/search.jspx", "/hotel/search", new SearchController()),
-    ADD_ACCOUNT("Add_account", "pages/autorization.jspx", "/hotel/customer", new CustomerController()),
-    CREATE_USER("Create_user","","" , new AddAccountController()),
-    RESERVATION("Reservation", "pages/reservation.jspx", "/hotel/reservation", new ReservationController()),
-    PAYMENT("Payment", "pages/payment.jspx", "/hotel/payment", new PaymentController()),
-    SETROOMID("SetRoomId", "", "", new SetIdController()),
-    UNSAFE("Unsafe", "pages/unsafe.jspx", "/hotel/unsafe", new UnsafeController());
+    HOME("Home", "pages/main.jspx", new DefaultController()),
+    LOGIN("Login", "",  new LoginController()),
+    LOGOUT("Logout", "", new LogoutController()),
+    SEARCH("Search", "pages/search.jspx", new SearchController()),
+    ADD_ACCOUNT("Add_account", "pages/autorization.jspx", new CustomerController()),
+    CREATE_USER("Create_user","", new AddAccountController()),
+    RESERVATION("Reservation", "pages/reservation.jspx", new ReservationController()),
+    PAYMENT("Payment", "pages/payment.jspx", new PaymentController()),
+    SETROOMID("SetRoomId", "", new SetIdController());
 
     private String pageName;
     private String pagePath;
-    private String contextPath;
     private Controller controller;
 
-    CommandType(String pageName, String pagePath, String contextPath, Controller controller) {
+    CommandType(String pageName, String pagePath, Controller controller) {
         this.pageName = pageName;
         this.pagePath = pagePath;
-        this.contextPath = contextPath;
         this.controller = controller;
     }
 
